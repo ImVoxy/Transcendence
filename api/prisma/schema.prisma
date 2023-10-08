@@ -1,0 +1,106 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id                          String        @id @default(uuid())
+  id42                        String        @unique
+  username                    String        @unique
+  avatar                      String        @default("anonymous.png")
+  createdAt                   DateTime      @default(now())
+  tFA_secret                  String?
+  tFA_enabled                 Boolean       @default(false)
+  password                    String?
+  status                      Status        @default(OFFLINE)
+  own_channels                Channel[]     @relation("Owner")
+  member_channels             Channel[]     @relation("Members")
+  admin_channels              Channel[]     @relation("Admins")
+  banned_channels             Channel[]     @relation("Banned")
+  muted_channels              Channel[]     @relation("Muted")
+  chat_invites                Channel[]     @relation("Invites")
+  messages                    Message[]     @relation("Author")
+  friend_requests_received    User[]        @relation("FriendRequestsReceived")
+  friends_received_relations  User[]        @relation("FriendRequestsReceived")
+  friend_requests_sent        User[]        @relation("FriendRequestsSent")
+  friends_sent_relations      User[]        @relation("FriendRequestsSent")
+  friends                     User[]        @relation("Friends")
+  friends_relations           User[]        @relation("Friends")
+  blocked                     User[]        @relation("Blocked")
+  blocked_reltions            User[]        @relation("Blocked")
+  player_one                  Game[]        @relation("One")
+  player_two                  Game[]        @relation("Two")
+  winner                      Game[]        @relation("Winner")
+}
+
+model Channel {
+  id                          String        @id @default(uuid())
+  name                        String        
+  access                      Access        @default(PUBLIC)
+  password                    String?
+  createdAt                   DateTime      @default(now())
+  owner                       User?         @relation(name: "Owner", fields: [ownerId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  ownerId                     String?
+  members                     User[]        @relation("Members")
+  admins                      User[]        @relation("Admins")
+  banned                      User[]        @relation("Banned")
+  muted                       User[]        @relation("Muted")
+  chat_invites                User[]        @relation("Invites")
+  messages                    Message[]     @relation("Message")
+}
+
+model Message {
+  id                          String        @id @default(uuid())
+  createdAt                   DateTime      @default(now())
+  text                        String
+  author                      User?         @relation(name: "Author", fields: [authorId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  authorId                    String?
+  channel                     Channel?      @relation(name: "Message", fields: [channelId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  channelId                   String?
+}
+
+model Game {
+  id                          String        @id @default(uuid())
+  craetedAt                   DateTime      @default(now())
+  match                       Match         @default(STARTING)        
+  mode                        Mode          @default(NORMAL)
+  player_one                  User          @relation(name: "One", fields: [player_oneId], references: [id])
+  player_oneId                String
+  player_two                  User?         @relation(name: "Two", fields: [player_twoId], references: [id])
+  player_twoId                String?
+  player_onePoints            Int           @default(0)
+  player_twoPoints            Int           @default(0)
+  winner                      User?         @relation(name: "Winner", fields: [winnerId], references: [id])
+  winnerId                    String?
+}
+
+enum Status {
+  ONLINE
+  OFFLINE
+  PLAYING
+}
+
+enum Match {
+  STARTING
+  GOING
+  ENDED
+}
+
+enum Mode {
+  EASY
+  NORMAL
+  HARD
+}
+
+enum Access {
+  PUBLIC
+  PRIVATE
+  PROTECTED
+}
