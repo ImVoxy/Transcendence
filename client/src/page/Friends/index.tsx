@@ -10,7 +10,7 @@ function Friends() {
     return (
         <div className="container-fluid">
             <div className={row}>
-                <h2 className={h2}>Search for someone, view your friends and friends requests but also people you&apos;ve blocked</h2>
+                <b className={h2}>Friendlist</b>
             </div>
             <div className={row}>
                 <SearchAddFriends />

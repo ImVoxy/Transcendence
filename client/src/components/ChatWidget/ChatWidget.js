@@ -16,7 +16,6 @@ function ChatWidget({ socket, username, room }) {
                 message: currentMessage,
                 time: new Date(Date.now()).getHours() + ':' + new Date(Date.now()).getMinutes(),
             }
-            alert(username)
             await socket.emit('chatToServer', messageData)
             // setMessageList((list) => [...list, messageData]);
             setCurrentMessage('')

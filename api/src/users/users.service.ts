@@ -154,11 +154,22 @@ export class UsersService {
     if (!check_friend_request) {
       return console.error('User', id, "didn't send you friend request");
     }
-    return await this.prisma.user.update({
+    await this.prisma.user.update({
       where: { id: myId },
       data: {
         friends: {
           connect: { id },
+        },
+      },
+      include: {
+        friends: true,
+      },
+    });
+    return await this.prisma.user.update({
+      where: { id },
+      data: {
+        friends: {
+          connect: { id: myId },
         },
       },
       include: {

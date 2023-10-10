@@ -16,7 +16,7 @@ function Home() {
             </div>
             <div className={row}>
                 <Pong />
-                <button className={btn}>PLAY BUTTON (will search for a random user online) OR Ranking in the queue if the player pressed play an is in the queue</button>
+                <button className={btn}>Queue up for a game !</button>
             </div>
         </div>
     )

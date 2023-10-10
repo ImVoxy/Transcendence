@@ -27,10 +27,10 @@ function ReceivedFriendRequests() {
             const fetchData = async () => {
                 setLoading(true)
                 await axios
-                    .delete(`/users/` + 1 + `/remove_friend_request`, {
+                    .delete(`/users/` + user.id + `/remove_friend_request`, {
                         headers: {
                             //Token de celui qui a envoye la friend request (ici, 4)
-                            Authorization: `Bearer ` + `eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWQ0MiI6InN0cmluZyIsImlhdCI6MTY4NTM3Mzg3MiwiZXhwIjoxNjg1NDA5ODcyfQ.UsyPlujRy6opEbF1UpHqv7eOBDhtdKQ18STqz5Hqc64`,
+                            Authorization: `Bearer ` + `eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWQ0MiI6InN0cmluZyIsImlhdCI6MTY4ODU3NDE0MSwiZXhwIjoxNjg4NjEwMTQxfQ.8z7HdWtH6uZ-Bvv4sPbw125BlDs0TIB3TO7jnsdxGl0`,
                         },
                     })
                     .then((response) => {

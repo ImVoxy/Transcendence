@@ -6,7 +6,7 @@ interface setDataState {
     data: any
 }
 
-const PostAddFriend = (userId: string) => { // was object
+const PostAddFriend = (userId: object) => { // was object
     let data: setDataState = {
         error: '',
         loading: true,
@@ -16,7 +16,7 @@ const PostAddFriend = (userId: string) => { // was object
         data = { error: '', loading: true, data: {} }
         await axios
             .post(
-                `users/ ` + userId + `/add_friend`,
+                `/users/` + userId + `/add_friend`,
                 { withCredentials: true },
                 window.config
             )

@@ -30,8 +30,11 @@ function SearchAddFriends() {
     const handleChange = (e: any) => {
         if (!getUsers.loading && !getUsers.error) {
             const results = getUsers.data.filter((post: any) => {
-                if (e.target.value === '') return getUsers.data
-                return post.username.toLowerCase().includes(e.target.value.toLowerCase())
+                if (e.target.value === '')
+                    return getUsers.data
+                if (post.username === me.username)
+                    return false
+                return post.username.toLowerCase().includes(e.target.value.toLowerCase()) 
             })
             setstate({
                 query: e.target.value,
@@ -167,7 +170,7 @@ function SearchAddFriends() {
                             return (
                                 <li className="col card list-group-item m-2 p-2 rounded bg-light" key={user.username}>
                                     <h3 className="card-title">
-                                        {user.username}, {user.id}
+                                        {user.username}, (id: {user.id})
                                     </h3>
                                     {AddFriendButton(user)}
                                     {BlockUserButton(user)}

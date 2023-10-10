@@ -134,7 +134,7 @@ function OneConv(conv: any) {
                 </div>
                 <div className="col">
                     {!pwdSettings && conv[2] !== "DM" && (
-                        <button className={btn} onClick={() => { isAdmin(1) && isPwdSettingsOn(true) }} >
+                        <button className={btn} onClick={() => { isAdmin(userId) && isPwdSettingsOn(true) }} >
                             Pwd management
                         </button>
                     )}
