@@ -5,6 +5,7 @@ import PostAddFriend from '../../requests/postAddFriend'
 import PostAddBlocked from '../../requests/postAddBlocked'
 import { btn, btnBlock } from '../../style/globalCss'
 import { UserContext } from '../../context/userContext';
+import RemoveFriendRequest from '../../requests/removeFriendRequest'
 import { useContext } from "react"
 import React from "react";
 
@@ -23,33 +24,17 @@ function ReceivedFriendRequests() {
 
         function confirmFriend() {
             setConfirmRequest(!confirmRequest)
-            // // enlever l'ID des friend request
-            const fetchData = async () => {
-                setLoading(true)
-                await axios
-                    .delete(`/users/` + user.id + `/remove_friend_request`, {
-                        headers: {
-                            //Token de celui qui a envoye la friend request (ici, 4)
-                            Authorization: `Bearer ` + `eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWQ0MiI6InN0cmluZyIsImlhdCI6MTY4ODU3NDE0MSwiZXhwIjoxNjg4NjEwMTQxfQ.8z7HdWtH6uZ-Bvv4sPbw125BlDs0TIB3TO7jnsdxGl0`,
-                        },
-                    })
-                    .then((response) => {
-                        setLoading(false)
-                    })
-                    .catch((err) => {
-                        console.log(err.message)
-                        setError(err.message)
-                    })
-            }
-            fetchData()
+            const [rmFriendRequest] = RemoveFriendRequest(user.id)
             const [addFriend] = PostAddFriend(user.id)
             setErrorAddFriend(addFriend.error)
+            window.location.reload()
         }
 
         function blockUser() {
             setUserblocked(!Userblocked)
             const [addBlocked] = PostAddBlocked(user.id)
             setErrorAddBlock(addBlocked.error)
+            window.location.reload()
         }
 
         return (

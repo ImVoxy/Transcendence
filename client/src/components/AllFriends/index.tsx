@@ -4,6 +4,7 @@ import GetFriends from '../../requests/getFriends'
 import PostAddBlocked from '../../requests/postAddBlocked'
 import { btn, btnBlock } from '../../style/globalCss'
 import { UserContext } from '../../context/userContext';
+import GetBlocked from '../../requests/getBlocked'
 import { useContext } from "react"
 import React from "react";
 
@@ -19,8 +20,8 @@ function AllFriends() {
             setUserblocked(!Userblocked)
             const [addBlocked] = PostAddBlocked(user.id)
             setErrorAddBlock(addBlocked.error)
+            window.location.reload()
         }
-
         return (
             <div>
                 {Userblocked && (
@@ -44,7 +45,7 @@ function AllFriends() {
                 {/* {error && <p>{error}</p>} */}
                 {
                     <button className={btn} onClick={startIt}>
-                        Start a conv
+                        Open DM
                     </button>
                 }
             </div>
@@ -79,10 +80,9 @@ function AllFriends() {
                         getFriends.data?.map((request: any) => (
                             <li className="card list-group-item m-2 p-2 rounded bg-light" key={request.username}>
                                 <h5 className="card-title">{request.username}, {request.id}</h5>
-                                BOUTTON START CONV DOESNT WORK
                                 {StartNewConv(request.id)}
                                 {SeeProfile(request)}
-                                {BlockUserButton(request.id)}
+                                {BlockUserButton(request)}
                             </li>
                         ))}
                 </ul>

@@ -17,7 +17,7 @@ const RemoveFriendRequest = (userId: string) => {
         data = { error: '', loading: true, data: {} }
         await axios
             .delete(
-                `/users/` + userId + `/remove_friend_request_alter`,
+                `/users/` + userId + `/remove_friend_request`,
                 window.config
             )
             .then((response) => {

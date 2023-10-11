@@ -5,7 +5,7 @@ import GetUsers from '../../requests/getUsers'
 import GetFriends from '../../requests/getFriends'
 import PostAddFriendRequest from '../../requests/postAddFriendRequest'
 import PostAddBlocked from '../../requests/postAddBlocked'
-import { h1, btn, card, row, ulRow } from '../../style/globalCss'
+import { h1, btn, btnBlock, card, row, ulRow } from '../../style/globalCss'
 import PostChannel from '../../requests/postChannels'
 import GetChannels from '../../requests/getChannels'
 import GetUser from '../../requests/getUser'
@@ -101,6 +101,7 @@ function SearchAddFriends() {
             //blocked only works with user 2 because token du 2
             const [addFriendRequest] = PostAddFriendRequest(user.id)
             setErrorFriendRequest(addFriendRequest.error)
+            window.location.reload()
         }
 
         return (
@@ -124,12 +125,13 @@ function SearchAddFriends() {
             setUserblocked(!Userblocked)
             const [addBlocked] = PostAddBlocked(user.id)
             setErrorAddBlock(addBlocked.error)
+            window.location.reload()
         }
 
         return (
             <div>
                 {Userblocked && (
-                    <button className={btn} onClick={blockUser}>
+                    <button className={btnBlock} onClick={blockUser}>
                         Block user
                     </button>
                 )}
@@ -170,7 +172,7 @@ function SearchAddFriends() {
                             return (
                                 <li className="col card list-group-item m-2 p-2 rounded bg-light" key={user.username}>
                                     <h3 className="card-title">
-                                        {user.username}, (id: {user.id})
+                                        {user.username}, {user.id}
                                     </h3>
                                     {AddFriendButton(user)}
                                     {BlockUserButton(user)}

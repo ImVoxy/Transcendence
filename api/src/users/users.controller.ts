@@ -78,6 +78,13 @@ export class UsersController {
   }
 
   @UseGuards(JwtAuthGuard)
+  @Delete(':id/remove_friend_request_alter')
+  removeFriendRequestAlter(@Param('id') id: string, @Request() req: any) {
+    const myId = req.user.id;
+    return this.usersService.deleteFriendRequest(myId, id);
+  }
+
+  @UseGuards(JwtAuthGuard)
   @Post(':id/add_friend')
   addFriend(@Param('id') id: string, @Request() req: any) {
     const myId = req.user.id;

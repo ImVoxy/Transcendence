@@ -5,36 +5,39 @@ import { h1, btn } from '../../style/globalCss'
 import React from "react";
 import { useContext } from "react"
 import { UserContext } from '../../context/userContext';
+import RemoveBlocked from '../../requests/removeBlocked'
 
 function BlockedFriends() {
     const me = useContext(UserContext).user;
     const userId = me.id
     const [getBlocked] = GetBlocked(userId)
 
-    function UnblockButton(target: string) {
+    function UnblockButton(user: any) {
         const [error, setError] = useState<any>('')
         const [loading, setLoading] = useState(true)
         const [unblockFriend, setUnblockFriend] = useState(true)
         function UnblockFriend() {
             setUnblockFriend(!unblockFriend)
-            const fetchData = async () => {
-                setLoading(true)
-                await axios
-                    .delete(`/users/` + userId + `/remove_blocked`, {
-                        headers: {
-                            //Token de celui qu'on veut deblock (comme pour delete friend request) (ici, 5)
-                            Authorization: `Bearer ` + `eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWQ0MiI6InN0cmluZyIsImlhdCI6MTY4NTM3Mzg3MiwiZXhwIjoxNjg1NDA5ODcyfQ.UsyPlujRy6opEbF1UpHqv7eOBDhtdKQ18STqz5Hqc64`,
-                        },
-                    })
-                    .then((response) => {
-                        setLoading(false)
-                    })
-                    .catch((err) => {
-                        console.log(err.message)
-                        setError(err.message)
-                    })
-            }
-            fetchData()
+            // const fetchData = async () => {
+            //     setLoading(true)
+            //     await axios
+            //         .delete(`/users/` + userId + `/remove_blocked`, {
+            //             headers: {
+            //                 //Token de celui qu'on veut deblock (comme pour delete friend request) (ici, 5)
+            //                 Authorization: `Bearer ` + `eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWQ0MiI6InN0cmluZyIsImlhdCI6MTY4NTM3Mzg3MiwiZXhwIjoxNjg1NDA5ODcyfQ.UsyPlujRy6opEbF1UpHqv7eOBDhtdKQ18STqz5Hqc64`,
+            //             },
+            //         })
+            //         .then((response) => {
+            //             setLoading(false)
+            //         })
+            //         .catch((err) => {
+            //             console.log(err.message)
+            //             setError(err.message)
+            //         })
+            // }
+            // fetchData()
+            const rmBlocked = RemoveBlocked(user)
+            window.location.reload()
         }
 
         return (

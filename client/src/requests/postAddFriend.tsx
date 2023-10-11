@@ -6,7 +6,7 @@ interface setDataState {
     data: any
 }
 
-const PostAddFriend = (userId: object) => { // was object
+const PostAddFriend = (userId: string) => { // was object
     let data: setDataState = {
         error: '',
         loading: true,

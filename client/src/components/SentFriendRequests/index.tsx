@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import GetFriendRequestsSent from '../../requests/getFriendRequestsSent'
-import RemoveFriendRequest from '../../requests/removeFriendRequest'
+import RemoveFriendRequestSent from '../../requests/removeFriendRequestSent'
 import { h1, btn } from '../../style/globalCss'
 import { UserContext } from '../../context/userContext';
 import { useContext } from "react"
@@ -17,8 +17,9 @@ function SentFriendRequests() {
 
         function cancelFriend() {
             setCancelRequest(!cancelRequest)
-            const [rmFriendRequest] = RemoveFriendRequest(user.id)
+            const [rmFriendRequest] = RemoveFriendRequestSent(user.id)
             setErrorRemoveFriendRequest(rmFriendRequest.error)
+            window.location.reload()
         }
 
         return (

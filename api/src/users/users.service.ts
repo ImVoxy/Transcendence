@@ -221,6 +221,14 @@ export class UsersService {
   }
 
   async deleteBlocked(id: string, myId: string) {
+    await this.prisma.user.update({
+      where: { id: myId },
+      data: {
+        blocked: {
+          disconnect: { id },
+        },
+      },
+    });
     return await this.prisma.user.update({
       where: { id },
       data: {
